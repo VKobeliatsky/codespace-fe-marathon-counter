@@ -10,10 +10,12 @@ export const counter: AppReducer<
 ) => {
     switch(action.type) {
         case 'INCREMENT': {
-            return {value: state.value + 1};
+            const {value} = action.payload;
+            return {value: state.value + value};
         }
         case 'DECREMENT': {
-            return {value: state.value - 1};
+            const {value} = action.payload;
+            return {value: state.value - value};
         }
         default:
             return state;

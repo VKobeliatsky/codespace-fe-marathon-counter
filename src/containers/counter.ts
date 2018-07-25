@@ -14,7 +14,7 @@ export default connect<
         value: state.counter.value
     }),
     dispatch => ({
-        onIncrement() { dispatch(increment())},
-        onDecrement() { dispatch(decrement())}
+        onIncrement(value) { dispatch(increment(value))},
+        onDecrement(value) { dispatch(decrement(value))}
     })
 )(CounterControl);
