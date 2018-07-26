@@ -5,7 +5,8 @@ import {
 } from "redux";
 import thunk, {ThunkDispatch} from "redux-thunk";
 
-import { counters as countersService, Services } from "../services";
+import { Services } from "../services";
+import { counters as countersService } from "../services/counters.mock";
 
 import { AppState } from "./types";
 import { Action } from "./actions";

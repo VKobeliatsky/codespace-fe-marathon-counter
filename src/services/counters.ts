@@ -2,7 +2,7 @@ import * as request from "superagent";
 
 const API_ROOT = 'http://localhost:3000/counters'
 
-interface Counter {
+export interface Counter {
     id: string;
     value: number;
 }
