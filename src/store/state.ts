@@ -1,8 +1,11 @@
 
 export interface Counter {
+    id: string;
     value: number;
 }
 
-export interface AppState {
-    counter: Counter;
+export interface AppState { 
+    counters: {
+        [id: string]: Counter
+    };
 }

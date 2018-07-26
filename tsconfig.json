@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "typeRoots": [
+        "./node_modules/@types",
+        "./src/store/enhancers"
+    ],
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",

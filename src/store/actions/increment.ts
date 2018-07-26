@@ -2,12 +2,13 @@ import { AppAction } from "./action";
 
 export type Increment = AppAction<
     'INCREMENT',
-    {value: number}
+    {id: string, value: number}
 >;
 
 export const increment = (
+    id: string, 
     value: number
 ): Increment => ({
     type: 'INCREMENT',
-    payload: {value}
+    payload: {id, value}
 });

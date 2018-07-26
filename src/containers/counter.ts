@@ -7,14 +7,14 @@ import { CounterControl, CounterControlProps } from "../components/counter-contr
 export default connect<
     Pick<CounterControlProps, 'value'>,
     Pick<CounterControlProps, 'onIncrement' | 'onDecrement'>,
-    {},
+    {id: string},
     AppState
 >(
-    state => ({
-        value: state.counter.value
+    (state, {id})=> ({
+        value: state.counters[id].value
     }),
-    dispatch => ({
-        onIncrement(value) { dispatch(increment(value))},
-        onDecrement(value) { dispatch(decrement(value))}
+    (dispatch, {id}) => ({
+        onIncrement(value) { dispatch(increment(id, value))},
+        onDecrement(value) { dispatch(decrement(id, value))}
     })
 )(CounterControl);
