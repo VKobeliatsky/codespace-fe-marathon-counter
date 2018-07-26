@@ -1,19 +1,22 @@
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
-import { AppState } from "../store/state";
-import { CountersControl, CountersControlProps } from "../components/counters-control";
-import { createCounter } from "../store/commands/create-counter";
+import { makeCountersSelector } from "../store/selectors";
+import { AppState } from '../store/types';
+import { createCounter } from "../store/commands";
+import {
+    CountersControl,
+    CountersControlProps
+} from "../components/counters-control";
 
 export default connect<
     Pick<CountersControlProps, 'counters'>,
     Pick<CountersControlProps, 'onAddCounter'>,
-    // null,
-    null,
-    // Pick<CountersControlProps, 'onCounterClick'>,
+    {},
     AppState
 >(
-    state => ({
-        counters: Object.keys(state.counters).map(id => state.counters[id])
+    createStructuredSelector({
+        counters: makeCountersSelector()
     }),
     dispatch => ({
         onAddCounter() {

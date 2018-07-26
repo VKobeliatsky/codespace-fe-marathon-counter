@@ -1,20 +1,25 @@
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { makeCounterValueSelector } from "../store/selectors";
+import { decrease, increase } from "../store/commands";
+import { AppState } from '../store/types';
 
-import { increment, decrement } from "../store/actions";
-import { AppState } from "../store/state";
-import { CounterControl, CounterControlProps } from "../components/counter-control";
+import {
+    CounterControl,
+    CounterProps
+} from "../components/counter-control";
 
 export default connect<
-    Pick<CounterControlProps, 'value'>,
-    Pick<CounterControlProps, 'onIncrement' | 'onDecrement'>,
+    Pick<CounterProps, 'value'>,
+    Pick<CounterProps, 'onIncrement' | 'onDecrement'>,
     {id: string},
     AppState
 >(
-    (state, {id})=> ({
-        value: state.counters[id].value
+    () => createStructuredSelector({
+        value: makeCounterValueSelector()
     }),
     (dispatch, {id}) => ({
-        onIncrement(value) { dispatch(increment(id, value))},
-        onDecrement(value) { dispatch(decrement(id, value))}
+        onIncrement(value) { dispatch(increase(id, value)); },
+        onDecrement(value) { dispatch(decrease(id, value)); }
     })
 )(CounterControl);

@@ -1,4 +1,4 @@
-import { AppAction } from "./action";
+import { AppAction } from "../types";
 
 export type SetCounter = AppAction<
     'SET_COUNTER',

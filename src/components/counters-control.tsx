@@ -6,21 +6,17 @@ import {
     ListGroupItem
  } from "react-bootstrap";
 
-import { Counter } from "../store/state";
+import { Counter } from "../store/types";
 
 export interface CountersControlProps {
     counters?: Counter[];
     onAddCounter(): void;
-    // onCounterClick(id: string): void;
+    onCounterClick(id: string): void;
 }
 
 export class CountersControl extends React.PureComponent<CountersControlProps> {
     public render() {
-        const {
-            counters,
-            onAddCounter,
-            // onCounterClick
-        } = this.props;
+        const {counters, onAddCounter, onCounterClick} = this.props;
         return (
             <>
                 <Row>
@@ -42,7 +38,7 @@ export class CountersControl extends React.PureComponent<CountersControlProps> {
                                     <ListGroupItem
                                         key={counter.id}
                                         header={`id: ${counter.id}`}
-                                        // onClick={() => onCounterClick(counter.id)}
+                                        onClick={() => onCounterClick(counter.id)}
                                     >
                                         Value {counter.value}
                                     </ListGroupItem>

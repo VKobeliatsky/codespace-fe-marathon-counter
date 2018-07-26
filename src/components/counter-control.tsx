@@ -1,86 +1,71 @@
 import * as React from "react";
 import {
-    Row, Col,
     InputGroup,
-    Button
+    DropdownButton,
+    MenuItem,
+    Panel
 } from "react-bootstrap";
 
-export interface CounterControlProps {
-    value: number;
+import { DuckCounter } from "./duck-counter";
+
+export interface CounterProps {
+    value: number | null;
     onIncrement(increment: number): void;
     onDecrement(decrement: number): void;
 }
 
-export interface CounterControlState {
-    increment: number;
-    decrement: number;
-}
-
-export class CounterControl extends React.PureComponent<
-    CounterControlProps,
-    CounterControlState
-> {
-
-    public state = {
-        increment: 1,
-        decrement: 1
-    }
-
+export class CounterControl extends React.PureComponent<CounterProps> {
     public render() {
         const {value} = this.props;
-        const {increment, decrement} = this.state;
-        return (<>
-            <Row>
-                <Col>
-                    <InputGroup bsSize="large">
-                        <InputGroup.Button>
-                            <Button onClick={this.handleIncrement}>Increment</Button>
-                        </InputGroup.Button>
-                        <input
-                            type="number"
-                            className="form-control"
-                            onChange={this.handleIncrementChange}
-                            value={increment}
-                        />
-                    </InputGroup>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <InputGroup bsSize="large">
-                        <input
-                            type="number"
-                            className="form-control"
-                            readOnly={true}
-                            value={value}
-                        />
-                    </InputGroup>  
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <InputGroup bsSize="large">
-                        <InputGroup.Button>
-                            <Button onClick={this.handleDecrement}>Decrement</Button>
-                        </InputGroup.Button>
-                        <input
-                            type="number"
-                            className="form-control"
-                            onChange={this.handleDecrementChange}
-                            value={decrement}
-                        />
-                    </InputGroup>
-                </Col>
-            </Row>
-        </>);
+        return (value === null ?
+            <Panel bsStyle="danger">
+                <Panel.Heading>
+                    Error
+                </Panel.Heading>
+                <Panel.Body>
+                    No Counter
+                </Panel.Body>
+            </Panel> :
+            <InputGroup bsSize="large">
+                <DropdownButton 
+                    id="counter-increment"
+                    title="Decrement"
+                    componentClass={InputGroup.Button}
+                >
+                    <MenuItem onClick={this.handleDecrement(1)}>
+                        Small
+                    </MenuItem>
+                    <MenuItem onClick={this.handleDecrement(4)}>
+                        Medium
+                    </MenuItem>
+                    <MenuItem onClick={this.handleDecrement(12)}>
+                        Large
+                    </MenuItem>
+                </DropdownButton>
+                <DuckCounter count={value} />
+                <DropdownButton 
+                    id="counter-increment"
+                    title="Increment"
+                    componentClass={InputGroup.Button}
+                >
+                    <MenuItem onClick={this.handleIncrement(1)}>
+                        Small
+                    </MenuItem>
+                    <MenuItem onClick={this.handleIncrement(4)}>
+                        Medium
+                    </MenuItem>
+                    <MenuItem onClick={this.handleIncrement(12)}>
+                        Large
+                    </MenuItem>
+                </DropdownButton>
+            </InputGroup>
+        );
     }
 
-    private handleIncrementChange: React.ChangeEventHandler<HTMLInputElement>
-        = e => this.setState({increment: Number(e.currentTarget.value)})
-    private handleDecrementChange: React.ChangeEventHandler<HTMLInputElement>
-        = e => this.setState({decrement: Number(e.currentTarget.value)})
-    
-    private handleDecrement = () => this.props.onDecrement(this.state.decrement);
-    private handleIncrement = () => this.props.onIncrement(this.state.increment);
-
+    private handleIncrement = (
+        value: number
+    ) => () => this.props.onIncrement(value);
+    private handleDecrement = (
+        value: number
+    ) => () => this.props.onDecrement(value);
 }

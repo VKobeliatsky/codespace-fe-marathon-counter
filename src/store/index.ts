@@ -1,16 +1,27 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
+import {
+    createStore,
+    combineReducers,
+    applyMiddleware
+} from "redux";
+import thunk, {ThunkDispatch} from "redux-thunk";
 
-import { counters as countersService } from "../services";
+import { counters as countersService, Services } from "../services";
 
-import { AppState } from "./state";
-import { counters } from "./reducers/counters";
+import { AppState } from "./types";
+import { Action } from "./actions";
+import { counters } from "./reducers";
 
-export default createStore(
+const store = createStore(
     combineReducers<AppState>({
         counters
     }),
-    applyMiddleware(
+    applyMiddleware<
+        ThunkDispatch<AppState, Services, Action>
+    >(
         thunk.withExtraArgument({counters: countersService})
     )
 );
+
+export default store;
+
+export type Store = typeof store;

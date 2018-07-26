@@ -1,5 +1,5 @@
-import { AppAction } from "./action";
-import { Counter } from "../state";
+import { AppAction } from "../types";
+import { Counter } from "../types";
 
 export type ResetCounters = AppAction<
     'RESET_COUNTERS',
